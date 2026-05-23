@@ -11,10 +11,6 @@
 
   <p>Presiona el botón para enviar tu ubicación por WhatsApp.</p>
 
-  <p style="font-size:14px; color:gray;">
-    🔒 Tu ubicación será compartida de forma segura
-  </p>
-
   <button onclick="enviarUbicacion()" 
   style="padding:15px 25px; font-size:18px; background:#25D366; color:white; border:none; border-radius:6px;">
     Enviar ubicación
@@ -27,17 +23,20 @@
         return;
       }
 
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
 
-        const mensaje = Hola, te envío mi ubicación: https://www.google.com/maps?q=${lat},${lng};
-        const url = https://api.whatsapp.com/send?phone=18492202163&text=${encodeURIComponent(mensaje)};
+          const mensaje = "Mi ubicación: https://www.google.com/maps?q=" + lat + "," + lng;
+          const url = "https://api.whatsapp.com/send?phone=18492202163&text=" + encodeURIComponent(mensaje);
 
-        window.location.href = url;
-      }, function() {
-        alert("No se pudo obtener la ubicación");
-      });
+          window.location.href = url;
+        },
+        function(error) {
+          alert("Activa la ubicación y vuelve a intentarlo");
+        }
+      );
     }
   </script>
 
